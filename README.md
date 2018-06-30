@@ -1,6 +1,6 @@
 # Project Lorann
 
-The goal is to rewrite the old game from 'TRON' in Java.
+The goal is to rewrite the old game 'TRON' in Java.
 
 ## Built With
 
