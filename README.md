@@ -1,4 +1,4 @@
-# Project Lorann
+# Project Tron
 
 The goal is to rewrite the old game 'TRON' in Java.
 
