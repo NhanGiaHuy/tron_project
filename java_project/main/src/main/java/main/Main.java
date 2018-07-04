@@ -1,11 +1,12 @@
 package main;
 
-public class Main {
+public class Main extends Run {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		
-		new Menu();
-		new Run();
+		//new Menu();
+		new Run().run();
+
 
 	}
 
