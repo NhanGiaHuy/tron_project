@@ -18,5 +18,15 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>6.0.6</version>
     </dependency>
+    <dependency>
+    	<groupId>fr.exia</groupId>
+    	<artifactId>controller</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>fr.exia</groupId>
+    	<artifactId>view</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>

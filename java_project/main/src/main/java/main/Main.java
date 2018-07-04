@@ -1,11 +1,15 @@
 package main;
 
-import view.Game;
+import controller.*;
 
 public class Main {
 
 	public static void main(String[] args) {
-		new Game();
+		//new Game();
+		
+		new KeyPressed();
+		new Run();
+		new Run2();
 		
 	}			
 }

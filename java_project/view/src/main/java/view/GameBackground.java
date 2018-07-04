@@ -7,20 +7,34 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class GamePanel extends JPanel {
+public class GameBackground extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public static final int WIDTH = 618;
 	public static final int HEIGHT = 414;
 	
-
-	public GamePanel() {
+	BufferedImage img;
+	
+	public GameBackground() {
 		super();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
-		Init.init();
-		
+		init();
+	}
+	
+	private void init() {
+		try {
+			img = ImageIO.read(getClass().getResourceAsStream("/1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void paintComponent(Graphics g) {
+		if (img != null) {
+			g.drawImage(img, 0, 0, null);
+		}
 	}
 }
