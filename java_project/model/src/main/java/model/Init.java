@@ -16,7 +16,7 @@ public class Init extends Vars {
 	public void init() {
 		sm = new ScreenManager();
 		DisplayMode dm = sm.findFirstCompatibaleMode(modes);
-		sm.setFullScreen(dm);
+		//sm.setFullScreen(dm);
 		Window w = sm.getFullScreenWindow();
 		w.setFont(new Font("Arial", Font.PLAIN, 20));
 		w.setBackground(Color.WHITE);
