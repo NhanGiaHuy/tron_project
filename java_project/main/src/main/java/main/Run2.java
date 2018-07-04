@@ -1,9 +1,8 @@
 package main;
 
 import model.Loop;
-import model.Vars;
 
-public class Run2 extends Vars {
+public class Run2 extends Loop {
 	
 	public void run() {
 		try {

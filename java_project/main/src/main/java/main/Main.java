@@ -8,8 +8,6 @@ public class Main {
 		//new Game();
 		
 		new KeyPressed();
-		new Run();
-		new Run2();
 		
 	}			
 }

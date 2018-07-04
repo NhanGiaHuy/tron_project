@@ -3,12 +3,8 @@ package model;
 import java.awt.Image;
 import java.util.ArrayList;
 
-public class Animations {
+public class Animations extends Vars {
 
-	private ArrayList scenes;
-	private int sceneIndex;
-	private long movieTime;
-	private long totalTime;
 
 	public Animations() {
 		scenes = new ArrayList();

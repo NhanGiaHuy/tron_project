@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage;
 
 import view.ScreenManager;
 
-public class Init extends ScreenManager {
-	
-	protected ScreenManager sm;
+public class Init extends Vars {
+
+	private static final DisplayMode modes[] = { new DisplayMode(640, 480, 16, 0), };
 
 	public void init() {
 		sm = new ScreenManager();

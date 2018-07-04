@@ -6,8 +6,6 @@ import view.ScreenManager;
 
 public class Loop extends Vars {
 	
-
-	
 	public void gameLoop(){
 		long startTime = System.currentTimeMillis();
 		long cumTime = startTime;
