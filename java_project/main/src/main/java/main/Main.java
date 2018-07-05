@@ -1,4 +1,5 @@
 package main;
+import view.*;
 
 public class Main {
 
