@@ -1,19 +1,30 @@
 package main;
 
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 
-import main.GamePanel;
+import main.Board;
 
-public class Game {
+public class Game extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	public Game() {
-		
-		JFrame window = new JFrame("TRON GAME");
-		window.setContentPane(new GamePanel());
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);
-		window.pack();
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
+		setTitle("TRON GAME");
+		setContentPane(new Board());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		pack();
+		setLocationRelativeTo(null);
+	}
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				JFrame frame = new Game();
+				frame.setVisible(true);
+			}
+		});
 	}
 }
