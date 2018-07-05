@@ -1,12 +1,9 @@
 package main;
 
-public class Main extends Run {
+public class Main {
 
-	public static void main(String[] args)  {
-		
-		//new Menu();
-		new Run().run();
-
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 
 	}
 

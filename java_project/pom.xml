@@ -21,10 +21,12 @@
      </plugins>
   </build>
   <modules>
+    <module>contract</module>
     <module>controller</module>
     <module>model</module>
     <module>view</module>
     <module>main</module>
+    <module>showboard</module>
   </modules>
   <reporting>
     <plugins>
