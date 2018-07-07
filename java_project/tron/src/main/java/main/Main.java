@@ -4,14 +4,20 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class Game extends JFrame {
+import controller.Game;
 
-	Game() {
-		add(new Board());
+public class Main extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	Main() {
+		add(new Game());
 		setResizable(false);
 		pack();
-
-		setTitle("Snake");
+		setTitle("TRON");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -22,7 +28,7 @@ public class Game extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				JFrame frame = new Game();
+				JFrame frame = new Main();
 				frame.setVisible(true);
 			}
 		});
