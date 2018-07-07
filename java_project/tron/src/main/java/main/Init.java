@@ -5,13 +5,10 @@ import javax.swing.Timer;
 import controller.Game;
 
 public class Init extends Game {
-	
-	/**
-	 * 
-	 */
+
+
 	private static final long serialVersionUID = 1L;
-
-
+	
 	public void initializeGame() {
 		// set our snake's initial size
 		player1.setSize(999);

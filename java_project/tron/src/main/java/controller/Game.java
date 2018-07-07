@@ -16,11 +16,14 @@ import javax.swing.Timer;
 import main.Init;
 import model.Players;
 
-@SuppressWarnings("serial")
 public class Game extends JPanel implements ActionListener {
 
 	// TODO: Implement a way for the player to win
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Holds height and width of the window
 	protected final static int width = 600;
 	protected final static int height = 400;
@@ -61,6 +64,7 @@ public class Game extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		draw(g);
+		
 	}
 
 	// Draw our Snake (Called on repaint()).
@@ -79,7 +83,7 @@ public class Game extends JPanel implements ActionListener {
 				// Snake's head
 				g.setColor(Color.BLUE);
 				g.fillRect(player2.getPlayerX(i), player2.getPlayerY(i), pixel, pixel);
-
+				
 			}
 			// Sync our graphics together
 			Toolkit.getDefaultToolkit().sync();
@@ -154,6 +158,7 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	void endGame(Graphics g) {
+		
 
 		// Create a message telling the player the game is over
 		String message = "Game over";
@@ -180,6 +185,7 @@ public class Game extends JPanel implements ActionListener {
 			checkCollisions();
 			player1.move();
 			player2.move();
+			
 		}
 		// Repaint or 'render' our screen
 		repaint();
