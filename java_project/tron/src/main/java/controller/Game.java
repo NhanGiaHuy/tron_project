@@ -33,8 +33,8 @@ public class Game extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	// Define the width and the height of the window
-	private final static int width = 900;
-	private final static int height = 700;
+	private final static int width = 600;
+	private final static int height = 400;
 
 	// Define the pixel size of our lightcycle
 	private final static int pixel = 10;
