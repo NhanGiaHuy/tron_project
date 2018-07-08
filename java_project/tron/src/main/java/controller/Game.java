@@ -16,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -32,11 +33,11 @@ public class Game extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	// Define the width and the height of the window
-	private final static int width = 600;
-	private final static int height = 400;
+	private final static int width = 900;
+	private final static int height = 700;
 
 	// Define the pixel size of our lightcycle
-	private final static int pixel = 5;
+	private final static int pixel = 10;
 
 	// The total of pixels the game could possibly have
 	private final static int playGrid = (width * height) / (pixel * pixel);
@@ -86,7 +87,6 @@ public class Game extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		draw(g);
-
 	}
 
 	/**
@@ -129,6 +129,7 @@ public class Game extends JPanel implements ActionListener {
 	 * 
 	 */
 	void draw(Graphics g) {
+
 		// Only draw if the game is running
 		if (isRunning == true) {
 			// Draw our first lightcycle.
@@ -239,7 +240,6 @@ public class Game extends JPanel implements ActionListener {
 	 * 
 	 */
 	void endGame(Graphics g) {
-
 		// Create message for game over and winner
 		String message = "Game over";
 		String message2 = winner;
