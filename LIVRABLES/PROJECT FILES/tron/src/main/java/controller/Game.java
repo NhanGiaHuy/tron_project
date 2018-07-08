@@ -33,11 +33,11 @@ public class Game extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	// Define the width and the height of the window
-	private final static int width = 900;
-	private final static int height = 700;
+	private final static int width = 600;
+	private final static int height = 400;
 
 	// Define the pixel size of our lightcycle
-	private final static int pixel = 10;
+	private final static int pixel = 5;
 
 	// The total of pixels the game could possibly have
 	private final static int playGrid = (width * height) / (pixel * pixel);
@@ -50,7 +50,7 @@ public class Game extends JPanel implements ActionListener {
 
 	// Set the game speed (the lower the value is, higher the lightcycle speed will
 	// be)
-	private int speed = 80;
+	private int speed = 50;
 
 	// Instances of our lightcycles
 	private Players player1 = new Players();
