@@ -368,7 +368,7 @@ public class Game extends JPanel implements ActionListener {
 			preparedStatement.setObject(2, temps, Types.DOUBLE);
 			preparedStatement.executeUpdate();
 
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
