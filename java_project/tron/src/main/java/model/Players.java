@@ -2,21 +2,38 @@ package model;
 
 import controller.Game;
 
+/**
+ * TRON PROJECT
+ * 
+ * @author lborruto
+ * @version 1.0
+ */
+
+/**
+ * 
+ * Define our Players using Getters and Setters
+ * 
+ */
 public class Players {
 
-	// Stores the joints / body part locations for our snake
+	// Stores the traces locations for our Lightcycles
 	private final int[] x = new int[Game.getGrid()];
 	private final int[] y = new int[Game.getGrid()];
 
-	// Stores direction of our snake
+	// Stores direction of our lightcycles
 	private boolean left = false;
 	private boolean right = false;
 	private boolean up = false;
 	private boolean down = false;
 
-	private int size = 0; // Stores # of dots / joints the snake has (starts
-							// with 3)
+	// Set numbers of dots
+	private int size = 0;
 
+	/**
+	 * 
+	 * Get the coordinate X,Y for our Players
+	 * 
+	 */
 	public int getPlayerX(int index) {
 		return x[index];
 	}
@@ -25,6 +42,11 @@ public class Players {
 		return y[index];
 	}
 
+	/**
+	 * 
+	 * Set the coordinate X,Y for our Players
+	 * 
+	 */
 	public void setPlayerX(int i) {
 		x[0] = i;
 	}
@@ -33,6 +55,11 @@ public class Players {
 		y[0] = i;
 	}
 
+	/**
+	 * 
+	 * Set the movement of our players
+	 * 
+	 */
 	public boolean isMovingLeft() {
 		return left;
 	}
@@ -76,13 +103,12 @@ public class Players {
 	public void move() {
 		for (int i = size; i > 0; i--) {
 
-			// Moves the joints of the snake 'up the chain'
-			// Meaning, the joint of the snake all move up one
+			// Moves the trace of the lightcycles after it
 			x[i] = x[(i - 1)];
 			y[i] = y[(i - 1)];
 		}
 
-		// Moves snake to the left
+		// Moves to the left
 		if (left) {
 			x[0] -= Game.getPixel();
 		}
@@ -94,12 +120,9 @@ public class Players {
 		if (down) {
 			y[0] += Game.getPixel();
 		}
-		// And finally up
+		// Up
 		if (up) {
 			y[0] -= Game.getPixel();
 		}
-
-		// Dotsize represents the size of the joint, so a pixel of DOTSIZE
-		// gets added on to the snake in that direction
 	}
 }
