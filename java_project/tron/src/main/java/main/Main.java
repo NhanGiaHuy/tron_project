@@ -30,5 +30,7 @@ public class Main extends JFrame {
 		setTitle("TRON");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 	}
+
 }

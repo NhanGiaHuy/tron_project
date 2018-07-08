@@ -10,6 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -17,17 +25,12 @@ import model.Players;
 
 public class Game extends JPanel implements ActionListener {
 
-	// TODO: Implement a way for the player to win
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// Holds height and width of the window
-	protected final static int width = 600;
-	protected final static int height = 400;
+	private final static int width = 600;
+	private final static int height = 400;
 
-	// Used to represent pixel size of our snake's joints
+	// Used to represent pixel size of our lightcycle joints
 	private final static int pixel = 5;
 
 	// The total amount of pixels the game could possibly have.
@@ -40,18 +43,25 @@ public class Game extends JPanel implements ActionListener {
 	private boolean isRunning = true;
 
 	// Timer used to record tick times
-	protected Timer timer;
+	private Timer timer;
 
-	// Used to set game speed, the lower the #, the faster the snake travels
+	// Used to set game speed, the lower the #, the faster the lightcycle travels
 	// which in turn
 	// makes the game harder.
-	protected static int speed = 100;
+	private int speed = 80;
 
-	// Instances of our snake so we can use their methods
-	protected Players player1 = new Players();
-	protected Players player2 = new Players();
+	// Instances of our lightcycle so we can use their methods
+	private Players player1 = new Players();
+	private Players player2 = new Players();
+
+	private String winner;
+
+	static double chrono = 0;
+	static double chrono2 = 0;
+	static double temps;
 
 	public Game() {
+		chrono = java.lang.System.currentTimeMillis();
 		addKeyListener(new Keys());
 		setBackground(Color.BLACK);
 		setFocusable(true);
@@ -67,11 +77,11 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	public void initializeGame() {
-		// set our snake's initial size
+		// set our lightcycle initial size
 		player1.setSize(999);
 		player2.setSize(999);
 
-		// Create our snake's body
+		// Create our lightcycle body
 		for (int i = 0; i < player1.getSize(); i++) {
 			player1.setPlayerX(width / 2);
 			player1.setPlayerY(height / 2);
@@ -81,7 +91,7 @@ public class Game extends JPanel implements ActionListener {
 			player2.setPlayerX(100);
 			player2.setPlayerY(100);
 		}
-		// Start off our snake moving right
+		// Start off our lightcycle moving right
 		player1.setMovingLeft(true);
 		player2.setMovingRight(true);
 
@@ -90,20 +100,20 @@ public class Game extends JPanel implements ActionListener {
 		timer.start();
 	}
 
-	// Draw our Snake (Called on repaint()).
+	// Draw our lightcycle (Called on repaint()).
 	void draw(Graphics g) {
-		// Only draw if the game is running / the snake is alive
+		// Only draw if the game is running / the lightcycle is alive
 		if (isRunning == true) {
-			// Draw our snake.
+			// Draw our lightcycle.
 			for (int i = 0; i < player1.getSize(); i++) {
-				// Snake's head
+				// lightcycle head
 				g.setColor(Color.RED);
 				g.fillRect(player1.getPlayerX(i), player1.getPlayerY(i), pixel, pixel);
 
 			}
 
 			for (int i = 0; i < player2.getSize(); i++) {
-				// Snake's head
+				// lightcycle head
 				g.setColor(Color.BLUE);
 				g.fillRect(player2.getPlayerX(i), player2.getPlayerY(i), pixel, pixel);
 
@@ -112,36 +122,46 @@ public class Game extends JPanel implements ActionListener {
 			Toolkit.getDefaultToolkit().sync();
 		} else {
 			// If we're not alive, then we end our game
+			chrono2 = java.lang.System.currentTimeMillis();
+			temps = (chrono2 - chrono) / 1000;
+			Database();
 			endGame(g);
+
 		}
 	}
 
-	// Used to check collisions with snake's self and board edges
+	// Used to check collisions with lightcycle self and board edges
 	void checkCollisions() {
 
-		// If the snake hits its' own joints..
+		// If the lightcycle hits its' own joints..
 		for (int i = player1.getSize(); i > 0; i--) {
-			// Snake can't intersect with itself
+			// lightcycle can't intersect with itself
 			if ((player1.getPlayerX(0) == player1.getPlayerX(i) && (player1.getPlayerY(0) == player1.getPlayerY(i)))) {
-				isRunning = false; // then the game ends
+				isRunning = false;
+				winner = "BLUE WON";
+				// then the game ends
 			}
 
 			if ((player1.getPlayerX(0) == player2.getPlayerX(i) && (player1.getPlayerY(0) == player2.getPlayerY(i)))) {
-				isRunning = false; // then the game ends
+				isRunning = false;
+				winner = "BLUE WON";
+				// then the game ends
 			}
 		}
 
 		for (int i = player2.getSize(); i > 0; i--) {
-			// Snake can't intersect with itself
+			// lightcycle can't intersect with itself
 			if ((player2.getPlayerX(0) == player2.getPlayerX(i) && (player2.getPlayerY(0) == player2.getPlayerY(i)))) {
-				isRunning = false; // then the game ends
+				isRunning = false;
+				winner = "RED WON";// then the game ends
 			}
 			if ((player2.getPlayerX(0) == player1.getPlayerX(i) && (player2.getPlayerY(0) == player1.getPlayerY(i)))) {
-				isRunning = false; // then the game ends
+				isRunning = false;
+				winner = "RED WON";// then the game ends
 			}
 		}
 
-		// If the snake intersects with the board edges..
+		// If the lightcycle intersects with the board edges..
 		if (player1.getPlayerY(0) >= height) {
 			player1.setPlayerY(0);
 		}
@@ -206,7 +226,6 @@ public class Game extends JPanel implements ActionListener {
 			checkCollisions();
 			player1.move();
 			player2.move();
-
 		}
 		// Repaint or 'render' our screen
 		repaint();
@@ -268,8 +287,25 @@ public class Game extends JPanel implements ActionListener {
 		}
 	}
 
-	private boolean proximity(int a, int b, int closeness) {
-		return Math.abs((long) a - b) <= closeness;
+	public void Database() {
+
+		try {
+			System.out.println(temps);
+			System.out.println(winner);
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String URL = "jdbc:mysql://localhost:3306/tron?autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+			String USER = "root";
+			String PASS = "";
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+
+			PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO score(player, time) VALUES(?, ?)");
+			preparedStatement.setObject(1, winner, Types.CHAR);
+			preparedStatement.setObject(2, temps, Types.DOUBLE);
+			preparedStatement.executeUpdate();
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static int getGrid() {
