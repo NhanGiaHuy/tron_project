@@ -4,7 +4,7 @@ The goal is to rewrite the old game 'TRON' in Java.
 
 ## Getting Started
 
-* First of all get the Database in /LIVRABLES/databse.sql and import it onto phpMyAdmin.
+* First of all get the Database in /LIVRABLES/tron.sql and import it onto phpMyAdmin.
 
 * /!\ YOUR USERNAME SHOULD BE ' root ' AND NO PASSWORD /!\
 
