@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import main.Init;
 import model.Players;
 
 public class Game extends JPanel implements ActionListener {
@@ -64,7 +63,31 @@ public class Game extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		draw(g);
-		
+
+	}
+
+	public void initializeGame() {
+		// set our snake's initial size
+		player1.setSize(999);
+		player2.setSize(999);
+
+		// Create our snake's body
+		for (int i = 0; i < player1.getSize(); i++) {
+			player1.setPlayerX(width / 2);
+			player1.setPlayerY(height / 2);
+		}
+
+		for (int i = 0; i < player2.getSize(); i++) {
+			player2.setPlayerX(100);
+			player2.setPlayerY(100);
+		}
+		// Start off our snake moving right
+		player1.setMovingLeft(true);
+		player2.setMovingRight(true);
+
+		// set the timer to record our game's speed / make the game move
+		timer = new Timer(speed, this);
+		timer.start();
 	}
 
 	// Draw our Snake (Called on repaint()).
@@ -83,7 +106,7 @@ public class Game extends JPanel implements ActionListener {
 				// Snake's head
 				g.setColor(Color.BLUE);
 				g.fillRect(player2.getPlayerX(i), player2.getPlayerY(i), pixel, pixel);
-				
+
 			}
 			// Sync our graphics together
 			Toolkit.getDefaultToolkit().sync();
@@ -158,7 +181,6 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	void endGame(Graphics g) {
-		
 
 		// Create a message telling the player the game is over
 		String message = "Game over";
@@ -179,13 +201,12 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	// Run constantly as long as we're in game.
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (isRunning == true) {
 			checkCollisions();
 			player1.move();
 			player2.move();
-			
+
 		}
 		// Repaint or 'render' our screen
 		repaint();
@@ -247,7 +268,6 @@ public class Game extends JPanel implements ActionListener {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private boolean proximity(int a, int b, int closeness) {
 		return Math.abs((long) a - b) <= closeness;
 	}
