@@ -37,7 +37,7 @@ public class Game extends JPanel implements ActionListener {
 	private final static int height = 400;
 
 	// Define the pixel size of our lightcycle
-	private final static int pixel = 10;
+	private final static int pixel = 5;
 
 	// The total of pixels the game could possibly have
 	private final static int playGrid = (width * height) / (pixel * pixel);
