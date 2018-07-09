@@ -50,7 +50,7 @@ public class Game extends JPanel implements ActionListener {
 
 	// Set the game speed (the lower the value is, higher the lightcycle speed will
 	// be)
-	private int speed = 50;
+	private int speed = 30;
 
 	// Instances of our lightcycles
 	private Players player1 = new Players();
