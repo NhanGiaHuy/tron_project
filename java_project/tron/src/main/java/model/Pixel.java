@@ -7,7 +7,7 @@ package model;
  * @version 1.0
  */
 public class Pixel extends Grid {
-	
+
 	// Define the pixel size of our lightcycle
 	private static int pixel = 5;
 

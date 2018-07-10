@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,8 +33,8 @@ public class Game extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	// Define the width and the height of the window
-	public final static int width = 600;
-	public final static int height = 400;
+	public final static int width = 1200;
+	public final static int height = 800;
 
 	// Check if the game is running or not
 	protected boolean isRunning = true;
@@ -43,7 +44,7 @@ public class Game extends JPanel implements ActionListener {
 
 	// Set the game speed (the lower the value is, higher the lightcycle speed will
 	// be)
-	private int speed = 30;
+	private int speed = 1;
 
 	// Instances of our lightcycles
 	private Players player1 = new Players();
@@ -58,7 +59,7 @@ public class Game extends JPanel implements ActionListener {
 	public static double temps;
 
 	Database bdd = new Database();
-	
+
 	Move move = new Move();
 
 	Collision col = new Collision();
@@ -170,20 +171,20 @@ public class Game extends JPanel implements ActionListener {
 		// Create message for game over and winner
 		String message = "Game over";
 		String message2 = winner;
-		String message3 = "Game Time : " + String.valueOf(temps);
+		String message3 = "Game Time : " + String.valueOf(temps) + " s";
 
 		// Create a new font instance
-		Font font = new Font("Times New Roman", Font.BOLD, 30);
+		Font font = new Font("Times New Roman", Font.BOLD, 40);
 		FontMetrics metrics = getFontMetrics(font);
-
+		
 		// Set the color of the text and the font
 		g.setColor(Color.red);
 		g.setFont(font);
 
 		// Draw the message to the board
-		g.drawString(message, (width - metrics.stringWidth(message)) / 2, height / 2);
-		g.drawString(message2, (width - metrics.stringWidth(message)) / 3, height / 3);
-		g.drawString(message3, (width - metrics.stringWidth(message)) / 4, height / 4);
+		g.drawString(message, ((width / 2) - (metrics.stringWidth(message)/ 2)), height / 2);
+		g.drawString(message2, ((width / 2) - (metrics.stringWidth(message2)/ 2)), height / 3);
+		g.drawString(message3, ((width / 2) - (metrics.stringWidth(message3)/ 2)), height / 4);
 
 		System.out.println("END");
 	}

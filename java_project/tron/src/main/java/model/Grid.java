@@ -9,7 +9,7 @@ import main.Game;
  * @version 1.0
  */
 public class Grid extends Game {
-	
+
 	// The total of pixels the game could possibly have
 	private static int playGrid = (width * height) / (Pixel.getPixel() * Pixel.getPixel());
 
