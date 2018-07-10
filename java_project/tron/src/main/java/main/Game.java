@@ -33,8 +33,8 @@ public class Game extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	// Define the width and the height of the window
-	public final static int width = 1200;
-	public final static int height = 800;
+	public final static int width = 600;
+	public final static int height = 400;
 
 	// Check if the game is running or not
 	protected boolean isRunning = true;
@@ -174,11 +174,11 @@ public class Game extends JPanel implements ActionListener {
 		String message3 = "Game Time : " + String.valueOf(temps) + " s";
 
 		// Create a new font instance
-		Font font = new Font("Times New Roman", Font.BOLD, 40);
+		Font font = new Font("Times New Roman", Font.BOLD, 25);
 		FontMetrics metrics = getFontMetrics(font);
 		
 		// Set the color of the text and the font
-		g.setColor(Color.red);
+		g.setColor(Color.green);
 		g.setFont(font);
 
 		// Draw the message to the board
