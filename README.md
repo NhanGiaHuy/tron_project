@@ -8,14 +8,15 @@ The goal is to rewrite the old game 'TRON' in Java.
 
 * YOUR USERNAME SHOULD BE ' root ' AND NO PASSWORD
 
-* Or modify the Database() in the code to match your creditential 
-*(You can import the Project to Eclipse (Import > Existing Maven Project))*
-
-* In Eclipse the game is launched by Running the Main file.
-
 * If the Database is not imported correctly the game will freeze at the end of the party.
 
-* You can Launch the JAR of your choice in function of the difficulty.
+* Or modify the Database Class in order to match your personal creditential 
+
+* You can import the Project *(/LIVRABLES/MAVEN_PROJECT/tron)* to Eclipse *(Import > Existing Maven Project)*)
+
+* The game is launched by running the Main file.
+
+* You can Launch the JAR of your choice in /LIVRABLES/JAR_EXECUTABLES
 
 * Red Player is controlled by UP, DOWN, LEFT, RIGHT keys
 
