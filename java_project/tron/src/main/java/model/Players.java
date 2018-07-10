@@ -1,7 +1,5 @@
 package model;
 
-import controller.Game;
-
 /**
  * TRON PROJECT
  * 
@@ -17,8 +15,8 @@ import controller.Game;
 public class Players {
 
 	// Stores the traces locations for our Lightcycles
-	private final int[] x = new int[Game.getGrid()];
-	private final int[] y = new int[Game.getGrid()];
+	private final int[] x = new int[Grid.getGrid()];
+	private final int[] y = new int[Grid.getGrid()];
 
 	// Stores direction of our lightcycles
 	private boolean left = false;
@@ -47,12 +45,12 @@ public class Players {
 	 * Set the coordinate X,Y for our Players
 	 * 
 	 */
-	public void setPlayerX(int i) {
-		x[0] = i;
+	public void setPlayerX(int index, int i) {
+		x[index] = i;
 	}
 
-	public void setPlayerY(int i) {
-		y[0] = i;
+	public void setPlayerY(int index, int i) {
+		y[index] = i;
 	}
 
 	/**
@@ -100,29 +98,4 @@ public class Players {
 		size = j;
 	}
 
-	public void move() {
-		for (int i = size; i > 0; i--) {
-
-			// Moves the trace of the lightcycles after it
-			x[i] = x[(i - 1)];
-			y[i] = y[(i - 1)];
-		}
-
-		// Moves to the left
-		if (left) {
-			x[0] -= Game.getPixel();
-		}
-		// To the right
-		if (right) {
-			x[0] += Game.getPixel();
-		}
-		// Down
-		if (down) {
-			y[0] += Game.getPixel();
-		}
-		// Up
-		if (up) {
-			y[0] -= Game.getPixel();
-		}
-	}
 }

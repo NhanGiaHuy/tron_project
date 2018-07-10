@@ -1,4 +1,4 @@
-package controller;
+package main;
 
 import java.awt.Color;
 
@@ -11,15 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
-
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import controller.Collision;
+import controller.Edge;
+import controller.Move;
+import model.Database;
+import model.Pixel;
 import model.Players;
 
 /**
@@ -33,17 +32,11 @@ public class Game extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	// Define the width and the height of the window
-	private final static int width = 600;
-	private final static int height = 400;
-
-	// Define the pixel size of our lightcycle
-	private final static int pixel = 5;
-
-	// The total of pixels the game could possibly have
-	private final static int playGrid = (width * height) / (pixel * pixel);
+	public final static int width = 600;
+	public final static int height = 400;
 
 	// Check if the game is running or not
-	private boolean isRunning = true;
+	protected boolean isRunning = true;
 
 	// Record the tick time to make the lightcycles moving
 	private Timer timer;
@@ -57,12 +50,20 @@ public class Game extends JPanel implements ActionListener {
 	private Players player2 = new Players();
 
 	// Define the variable winner for the endscreen and the database
-	private String winner;
+	public static String winner;
 
 	// Define the chronometer set to know the time of a game
-	static double chrono = 0;
-	static double chrono2 = 0;
-	static double temps;
+	public static double chrono = 0;
+	public static double chrono2 = 0;
+	public static double temps;
+
+	Database bdd = new Database();
+	
+	Move move = new Move();
+
+	Collision col = new Collision();
+	Edge edge = new Edge();
+	String resultCol;
 
 	/**
 	 * 
@@ -104,15 +105,15 @@ public class Game extends JPanel implements ActionListener {
 		// Create our player 1 lightcycle
 		for (int i = 0; i < player1.getSize(); i++) {
 			// Set the initial position of the lightcycle
-			player1.setPlayerX(width / 2);
-			player1.setPlayerY(height / 2);
+			player1.setPlayerX(0, width / 2);
+			player1.setPlayerY(0, height / 2);
 		}
 
 		// Create our player 2 lightcycle
 		for (int i = 0; i < player2.getSize(); i++) {
 			// Set the initial position of the lightcycle
-			player2.setPlayerX(100);
-			player2.setPlayerY(100);
+			player2.setPlayerX(0, 100);
+			player2.setPlayerY(0, 100);
 		}
 		// Set the initial movement of the lightcycle 1 and 2
 		player1.setMovingLeft(true);
@@ -137,13 +138,13 @@ public class Game extends JPanel implements ActionListener {
 				// Lightcycle color
 				g.setColor(Color.RED);
 				// Draw our lightcycle with initial position and Rectangular (g.fillRect)
-				g.fillRect(player1.getPlayerX(i), player1.getPlayerY(i), pixel, pixel);
+				g.fillRect(player1.getPlayerX(i), player1.getPlayerY(i), Pixel.getPixel(), Pixel.getPixel());
 
 			}
 			// Draw our second lightcycle.
 			for (int i = 0; i < player2.getSize(); i++) {
 				g.setColor(Color.BLUE);
-				g.fillRect(player2.getPlayerX(i), player2.getPlayerY(i), pixel, pixel);
+				g.fillRect(player2.getPlayerX(i), player2.getPlayerY(i), Pixel.getPixel(), Pixel.getPixel());
 
 			}
 			// Synchronise the graphic
@@ -153,83 +154,9 @@ public class Game extends JPanel implements ActionListener {
 			chrono2 = java.lang.System.currentTimeMillis();
 			temps = (chrono2 - chrono) / 1000;
 			// Call the database and write Winner and Time
-			Database();
+			bdd.Database();
 			// End the game with Game over Screen + winner
 			endGame(g);
-		}
-	}
-
-	/**
-	 * 
-	 * Check the collisions between our lightcycles and itself
-	 * 
-	 * 
-	 */
-	void checkCollisions() {
-
-		for (int i = player1.getSize(); i > 0; i--) {
-			// Lightcycle can't intersect with itself
-			if ((player1.getPlayerX(0) == player1.getPlayerX(i) && (player1.getPlayerY(0) == player1.getPlayerY(i)))) {
-				// The game end
-				isRunning = false;
-				// Set the winner for the specific interaction
-				winner = "BLUE WON";
-			}
-			// Lightcycle can't intersect with player2
-			if ((player1.getPlayerX(0) == player2.getPlayerX(i) && (player1.getPlayerY(0) == player2.getPlayerY(i)))) {
-				isRunning = false;
-				winner = "BLUE WON";
-			}
-		}
-		// Do the same for player2
-		for (int i = player2.getSize(); i > 0; i--) {
-			if ((player2.getPlayerX(0) == player2.getPlayerX(i) && (player2.getPlayerY(0) == player2.getPlayerY(i)))) {
-				isRunning = false;
-				winner = "RED WON";
-			}
-			if ((player2.getPlayerX(0) == player1.getPlayerX(i) && (player2.getPlayerY(0) == player1.getPlayerY(i)))) {
-				isRunning = false;
-				winner = "RED WON";
-			}
-		}
-
-		// If the lightcycle intersects with the board edges
-		// the game continue and set the lightcycle to the other edge
-		if (player1.getPlayerY(0) >= height) {
-			player1.setPlayerY(0);
-		}
-
-		if (player1.getPlayerY(0) < 0) {
-			player1.setPlayerY(height);
-		}
-
-		if (player1.getPlayerX(0) >= width) {
-			player1.setPlayerX(0);
-		}
-
-		if (player1.getPlayerX(0) < 0) {
-			player1.setPlayerX(width);
-		}
-
-		if (player2.getPlayerY(0) >= height) {
-			player2.setPlayerY(0);
-		}
-
-		if (player2.getPlayerY(0) < 0) {
-			player2.setPlayerY(height);
-		}
-
-		if (player2.getPlayerX(0) >= width) {
-			player2.setPlayerX(0);
-		}
-
-		if (player2.getPlayerX(0) < 0) {
-			player2.setPlayerX(width);
-		}
-
-		// If the game end, stop our timer
-		if (!isRunning) {
-			timer.stop();
 		}
 	}
 
@@ -243,9 +170,7 @@ public class Game extends JPanel implements ActionListener {
 		// Create message for game over and winner
 		String message = "Game over";
 		String message2 = winner;
-
-		// To implement :
-		// double message3 = temps;
+		String message3 = "Game Time : " + String.valueOf(temps);
 
 		// Create a new font instance
 		Font font = new Font("Times New Roman", Font.BOLD, 30);
@@ -258,10 +183,7 @@ public class Game extends JPanel implements ActionListener {
 		// Draw the message to the board
 		g.drawString(message, (width - metrics.stringWidth(message)) / 2, height / 2);
 		g.drawString(message2, (width - metrics.stringWidth(message)) / 3, height / 3);
-
-		// To implement :
-		// g.drawDouble(message3, (width - metrics.stringWidth(message)) / 4, height /
-		// 4);
+		g.drawString(message3, (width - metrics.stringWidth(message)) / 4, height / 4);
 
 		System.out.println("END");
 	}
@@ -274,9 +196,25 @@ public class Game extends JPanel implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (isRunning == true) {
-			checkCollisions();
-			player1.move();
-			player2.move();
+			resultCol = col.checkCollisions(player1, player2);
+
+			switch (resultCol) {
+			case "p1":
+				// Set the winner for the specific interaction
+				winner = "RED WON";
+				// The game end
+				isRunning = false;
+			case "p2":
+				winner = "BLUE WON";
+				isRunning = false;
+			}
+			edge.checkEdge(player1, player2);
+			move.player(player1);
+			move.player(player2);
+			// If the game end, stop our timer
+			if (!isRunning) {
+				timer.stop();
+			}
 		}
 		// Repaint our screen
 		repaint();
@@ -342,54 +280,5 @@ public class Game extends JPanel implements ActionListener {
 				player2.setMovingLeft(false);
 			}
 		}
-	}
-
-	/**
-	 * 
-	 * Set the database communication to write the winner and the time
-	 * 
-	 */
-	public void Database() {
-
-		try {
-			System.out.println(temps);
-			System.out.println(winner);
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			String URL = "jdbc:mysql://localhost:3306/tron?autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-			String USER = "root";
-			String PASS = "";
-
-			// Connection to the Database
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-
-			// Statement to set our variables
-			PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO score(player, time) VALUES(?, ?)");
-			preparedStatement.setObject(1, winner, Types.CHAR);
-			preparedStatement.setObject(2, temps, Types.DOUBLE);
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 
-	 * Used to set the total of pixel we could have
-	 * 
-	 *
-	 */
-	public static int getGrid() {
-		return playGrid;
-	}
-
-	/**
-	 * 
-	 * Used to get Pixel size of our lightcycles
-	 * 
-	 *
-	 */
-	public static int getPixel() {
-		return pixel;
 	}
 }

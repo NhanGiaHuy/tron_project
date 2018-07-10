@@ -3,7 +3,6 @@ package main;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import controller.Game;
 
 /**
  * TRON PROJECT
@@ -38,6 +37,7 @@ public class Main extends JFrame {
 	 * 
 	 */
 	Main() {
+		new Menu();
 		// Launch the game by calling Game and so initializeGame();
 		add(new Game());
 		// Window not resizable
